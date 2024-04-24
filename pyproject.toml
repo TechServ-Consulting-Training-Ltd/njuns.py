@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "njuns.py"
+version = "0.0.1"
+authors = [
+    { name = "Joseph Packard", email = "jpackard@techserv.com" }
+]
+description = "An unofficial, in-house developed NJUNS API wrapper for https://web.njuns.com/"
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "aiohttp",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.black]
+line-length = 160
+
+[project.urls]
+Homepage = "https://github.com/TechServ-Consulting-Training-Ltd/njuns.py"
+Issues = "https://github.com/TechServ-Consulting-Training-Ltd/njuns.py/issues"
