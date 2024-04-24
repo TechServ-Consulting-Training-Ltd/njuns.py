@@ -1,3 +1,64 @@
+# NJUNS API
+To gain access to the NJUNS API, you must request access from aweaver [AT] njuns [DOT] com as stated in their FAQ. 
+For testing purposes, it would be ideal to also request access to their test UAT environment as well. These are separate credentials.
+
+Once this process is complete, you may send a token request either using the Postman examples NJUNS provides, or with this request 
+(substitute USERNAME and PASSWORD with your credentials):
+```http request
+POST /{APP}/rest/v2/oauth/token/grant_type=password&username={USERNAME}&password={PASSWORD} HTTP/1.1
+Host: {DOMAIN}.njuns.com
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Y2xpZW50OnNlY3JldA==
+
+```
+```shell
+curl -X POST \
+  -H "Authorization: Basic Y2xpZW50OnNlY3JldA==" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  "https://{DOMAIN}.njuns.com/{APP}/rest/v2/oauth/token/grant_type=password&username={USERNAME}&password={PASSWORD}"
+```
+
+## Using the NJUNS package
+
+> [!NOTE]
+> Because of the large amounts of entity types and their data,
+> this library will dynamically set class attributes for `Entity`.
+> When you attempt to access an attribute, your IDE may warn you
+> that the attribute reference is unresolved. If you are certain
+> that the attribute is present in the API response, this should be 
+> fine to ignore. To troubleshoot this, instantiate the client
+> with a `log_level` of `logging.DEBUG` and inspect the API
+> response.
+
+```py
+# Import thr API client
+import asyncio
+
+from tsutilitytools.njuns import NJUNSClient
+
+# Instantiate the client
+client = NJUNSClient()
+
+
+# Define your main coroutine
+async def main():
+    # Login with your API credentials
+    await client.login(username="email", password="password")
+
+    # Print your user info
+    print(client.user_info.name)
+
+    # Fetch five entities
+    entities = await client.fetch_entities(entity_name="njuns$Ticket", limit=5)
+
+    # Print the contact email of the first ticket entity
+    print(entities[0].contactEmail)
+
+
+# Run the coroutine
+asyncio.run(main())
+```
+
 # NJUNS API Wrapper Structure
 
 This API wrapper tries to follow the design pattern of many other popular asynchronous Python API wrappers.
