@@ -1,7 +1,10 @@
 import logging
 from abc import ABC
 from logging import Logger
-from typing import Any
+from typing import Any, Callable, Awaitable
+
+from ..route import Route
+from ..utils import Response
 
 _log: Logger = logging.getLogger(__name__)
 
@@ -14,5 +17,5 @@ class BaseRoute(ABC):
 
         :param client: The :class:`HTTPClient` instance.
         """
-        self.request = client.request
+        self.request: Callable[[Route, ...], Awaitable[Response]] = client.request
         _log.debug(f"Initializing {__name__}")

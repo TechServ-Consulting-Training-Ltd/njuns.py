@@ -22,6 +22,7 @@ from .models.user import UserInfo
 from .route import Route
 from .routes.entities import EntitiesRoute
 from .routes.queries import QueriesRoute
+from .routes.services import ServicesRoute
 from .utils import MISSING, Response
 
 _log: Logger = logging.getLogger(__name__)
@@ -44,7 +45,7 @@ async def json_or_text(response: aiohttp.ClientResponse) -> Union[Dict[str, Any]
     return text
 
 
-class HTTPClient(EntitiesRoute, QueriesRoute):
+class HTTPClient(EntitiesRoute, QueriesRoute, ServicesRoute):
     """Represents an HTTP client sending requests to the NJUNs API"""
 
     def __init__(self):

@@ -1,11 +1,13 @@
 import logging
 from logging import Logger
-from typing import ClassVar, Optional, Any
+from typing import ClassVar, Optional, Any, Literal
 from urllib.parse import quote
 
 from .utils import MISSING
 
 _log: Logger = logging.getLogger(__name__)
+
+Method = Literal["GET", "POST", "PUT", "DELETE"]
 
 
 def _set_api_environment(*, host: str = "njuns.com", app: str = "app") -> None:
@@ -25,7 +27,7 @@ class Route:
 
     BASE: ClassVar[str] = "https://njuns.com/app/rest/v2"
 
-    def __init__(self, method: str, path: str, /, **params: Any) -> None:
+    def __init__(self, method: Method, path: str, /, **params: Any) -> None:
         """Initializes a whole route to an API endpoint.
 
         :param method: The HTTP method used to make the request.
@@ -36,7 +38,7 @@ class Route:
         :type params: Optional[dict]
         """
         self.path: str = path
-        self.method: str = method
+        self.method: Method = method
 
         url = self.BASE + self.path
         # Assemble URL with parameters if present

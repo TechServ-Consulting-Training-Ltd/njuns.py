@@ -12,12 +12,12 @@ client = NJUNSClient(log_level=logging.ERROR)
 
 async def main():
     # Login with credentials, use prod environment
-    await client.login(username=os.getenv("USERNAME").strip(), password=os.getenv("PASSWORD").strip(), use_uat_environment=False)
+    await client.login(username=os.getenv("USERNAME").strip(), password=os.getenv("PASSWORD").strip(), use_uat_environment=True)
 
     # Fetch an entity by searching for its ticket number
     entity = (
         await client.search_entities(
-            entity_name="njuns$Ticket", conditions=[EntitySearchCondition("ticketNumber", EntitySearchOperator.EQ, "5928019")], view="_minimal"
+            entity_name="njuns$Ticket", conditions=[EntitySearchCondition("ticketNumber", EntitySearchOperator.EQ, "1234567")], view="_minimal"
         )
     )[0]
 
